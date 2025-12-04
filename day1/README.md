@@ -5,5 +5,5 @@
 [Part 2 Solution](puzzle2.py)  
 
 ```
-Note: Add your own input in this folder with filename: puzzle1_input.txt
+Note: Add your own input in this folder with filename: puzzle_input.txt
 ```
