@@ -25,8 +25,11 @@ def largest_possible_joltage(entries):
   sum = 0
   for each_entry in entries:
     overall_max_for_entry = 0 
-    for index in range(len(each_entry)-1): # checks till last second digit, as last digit should not be considered.
+    for index in range(len(each_entry)-1): # checks till last second digit, as last digit need not be considered.
       max_second_digit = 0
+      if int(each_entry[index]) < (overall_max_for_entry // 10): 
+          # checks if the first digit of the maximum number found is greater than all the other remaining elements. If it is not greater, then that element need not be considered, as the double digit number it generates will not be greater.
+          continue  
       for other_index in range(index + 1, len(each_entry)): # checks all other elements after the element first selected. 
         if int(each_entry[other_index]) > max_second_digit: # checks the maximum of the remaining elements for each iteration.
           max_second_digit = int(each_entry[other_index])
