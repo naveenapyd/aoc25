@@ -19,23 +19,22 @@ def list_of_input():
 
 def largest_possible_joltage(entries):
   ''' Each entry is checked for the largest possible double digit number present in it. 
-   This is done by checking the first element with all the elements after it.
-   Then second element with the elements after it and so on. '''
+   This is done by checking the first element, and checking the maximum of the elements after it.
+   Then second element with the maximum of the elements after it and so on. '''
   
   sum = 0
   for each_entry in entries:
-    all_numbers_in_each_entry = []
-    for index in range(len(each_entry)): 
+    overall_max_for_entry = 0 
+    for index in range(len(each_entry)-1): # checks till last second digit, as last digit should not be considered.
+      max_second_digit = 0
       for other_index in range(index + 1, len(each_entry)): # checks all other elements after the element first selected. 
-        two_digit_number_str = each_entry[index] + each_entry[other_index]
-        two_digit_number_int = int(two_digit_number_str)
-        all_numbers_in_each_entry.append(two_digit_number_int)
-    largest_possible_number = max(all_numbers_in_each_entry)
-    # print(largest_possible_number)
-    sum += largest_possible_number
-    # print(sum)
+        if int(each_entry[other_index]) > max_second_digit: # checks the maximum of the remaining elements for each iteration.
+          max_second_digit = int(each_entry[other_index])
+      two_digit_number = int(each_entry[index] + str(max_second_digit))    
+      if two_digit_number > overall_max_for_entry: # checks the maximum of all the elements in each entry
+        overall_max_for_entry = two_digit_number
+    sum += overall_max_for_entry
   return sum
-
 
 start = time.time()
 print(list_of_input())
