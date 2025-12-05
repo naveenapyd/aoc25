@@ -27,10 +27,10 @@ def number_of_zeros(entries):
     print(each_entry)
     if each_entry[0] == 'L':
       rotation_value = int(each_entry[1:])
-      if current_number == 0: # this is used because while left rotation, when the previous iteration stops at 0, the count of zeros is increased by 1.
+      if current_number == 0: # Hack - this is used because while left rotation, when the previous iteration stops at 0, the count of zeros is increased by 1.
         total_count_of_zeros -= 1
       current_number, zeros_in_each_rotation = rotation(-rotation_value, current_number)
-      if current_number == 0: # this is used because while left rotation, when the iteration stops at 0, the count of zeros is not getting increased by 1.
+      if current_number == 0: # Hack - this is used because while left rotation, when the iteration stops at 0, the count of zeros is not getting increased by 1.
         total_count_of_zeros += 1
     if each_entry[0] == 'R':
       rotation_value = int(each_entry[1:])

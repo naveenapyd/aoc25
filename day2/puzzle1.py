@@ -11,10 +11,10 @@ def list_of_input():
     entries = []
     with open(file_path, 'r') as file:
         for each_entry in file:
-            ranges = each_entry.split(',') # split function splits the values using comma. append function adds the values as an entry to the list.
+            ranges = each_entry.split(',') # split function splits the values using comma. 
             for r in ranges:   
-                numbers = r.split('-') # split function splits the values using hyphen. append function adds the values as an entry to the list.
-                entries.extend(numbers)
+                numbers = r.split('-') # split function splits the values using hyphen. 
+                entries.extend(numbers) # extend adds each number as a value in the list entries. Using append here will add numbers as another in the list entries.
     print(entries)
     return range_values(entries)
 
