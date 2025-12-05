@@ -4,16 +4,18 @@ import time
 
 def list_of_input():
     file_path = 'day4/puzzle_input.txt'
-    line_entries = []
+    char_entries = []
     with open(file_path, 'r') as file:
         for line in file:
-            # each line in the input is stored as a string in line_entries.
-            line_entries.append(line.strip()) # append is used to add each line to the list, and strip to remove the \n in every line. The strip distributes the entries whenever there is a new line
-    print(line_entries)
+            # each line in the input is stored as a string in the list named line_entries.
+            line_entries = list(line.strip()) 
+            # each char in every line is stored as an element in entries
+            char_entries.append(line_entries)
+    print(char_entries)
     overall_count = 0
-    grid = line_entries[:]
+    grid = char_entries[:]
     while True:
-        # only the first iteration needs to have line_entries as input.
+        # only the first iteration needs to have char_entries as input.
         # from the second iteration, the changed grid becomes the input.
         # this changed grid gets stored in grid on the left hand side in line 17.
         # for the next iteration, this left hand side 'grid' will become the input for the right hand side 'grid'.
@@ -24,6 +26,7 @@ def list_of_input():
             break
         overall_count += count_of_grid
     return overall_count
+
 
 def get_count_for_grid_and_new_grid(grid):
     ''' For each value in the line_entries when it is '@', its eight adjacent positions need to be checked.
@@ -62,11 +65,8 @@ def get_count_for_grid_and_new_grid(grid):
                             count += 1
                 if count < 4:
                     overall_count += 1
-                    temp_row = new_2d_array[x] 
-                    # each_line is a string, and string elements can not be replaced like a list. 
-                    # In order to replace an element, the whole string has to be replaced. 
-                    # This is done by slicing to before the replacement + replacement + after the replacement.
-                    new_2d_array[x] = temp_row[:y] + '.' + temp_row[y + 1:]
+                    # replace the element '@' with '.' to generate a new grid
+                    new_2d_array[x][y] = '.'
     return overall_count, new_2d_array
 
 start_time = time.time()
