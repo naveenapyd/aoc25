@@ -1,4 +1,4 @@
-# Day-4 Puzzle-1 : Printing Department
+# Day-4 Puzzle-2 : Printing Department
 
 import time
 
@@ -10,11 +10,25 @@ def list_of_input():
             # each line in the input is stored as a string in line_entries.
             line_entries.append(line.strip()) # append is used to add each line to the list, and strip to remove the \n in every line. The strip distributes the entries whenever there is a new line
     print(line_entries)
-    return adjacent_positions(line_entries)
+    overall_count = 0
+    grid = line_entries[:]
+    while True:
+        # only the first iteration needs to have line_entries as input.
+        # from the second iteration, the changed grid becomes the input.
+        # this changed grid gets stored in grid on the left hand side in line 17.
+        # for the next iteration, this left hand side 'grid' will become the input for the right hand side 'grid'.
+        count_of_grid, grid = get_count_for_grid_and_new_grid(grid)
+        if count_of_grid == 0:
+            # the loop needs to stop when the new grid created will be same as the old grid created.
+            # when this happens, the count will not increase; it will remain zero.
+            break
+        overall_count += count_of_grid
+    return overall_count
 
-def adjacent_positions(line_entries):
+def get_count_for_grid_and_new_grid(grid):
     ''' For each value in the line_entries when it is '@', its eight adjacent positions need to be checked.
-    In these adjacent positions, there should be less than four '@' for the value to be considered. 
+    In these adjacent positions, there should be less than four '@' for the value to be considered.
+    When this condition occurs, change the element '@' to '.'. Store this as a new 2d array, for it to be reused. 
     Eg: 1 2 3       (x-1,y-1) (x-1,y) (x-1,y+1)
         4 5 6       (x,y-1)    (x,y)    (x,y+1) 
         7 8 9       (x+1,y-1) (x+1,y) (x+1,y+1) 
@@ -24,7 +38,8 @@ def adjacent_positions(line_entries):
         All the edge numbers are exceptional cases.'''
     
     overall_count = 0
-    for x, each_line in enumerate(line_entries): 
+    new_2d_array = grid[:]
+    for x, each_line in enumerate(grid): 
         # x will be line from top to bottom
         for y, each_value in enumerate(each_line):
             # y will be line from left to right
@@ -32,7 +47,7 @@ def adjacent_positions(line_entries):
                 count = 0
                 for row_index in [x-1, x, x+1]:
                     # check the values from above to below of x,y
-                    if row_index < 0 or row_index > len(line_entries) - 1:
+                    if row_index < 0 or row_index > len(grid) - 1:
                         # check for edge values
                         continue
                     for column_index in [y-1, y, y+1]:
@@ -43,11 +58,16 @@ def adjacent_positions(line_entries):
                         if x == row_index and y == column_index:
                             # removes the centre value x,y as we do not need to count this
                             continue
-                        if line_entries[row_index][column_index] == '@':
+                        if grid[row_index][column_index] == '@':
                             count += 1
                 if count < 4:
                     overall_count += 1
-    return overall_count
+                    temp_row = new_2d_array[x] 
+                    # each_line is a string, and string elements can not be replaced like a list. 
+                    # In order to replace an element, the whole string has to be replaced. 
+                    # This is done by slicing to before the replacement + replacement + after the replacement.
+                    new_2d_array[x] = temp_row[:y] + '.' + temp_row[y + 1:]
+    return overall_count, new_2d_array
 
 start_time = time.time()
 print(list_of_input())
