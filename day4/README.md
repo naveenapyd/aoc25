@@ -1,4 +1,4 @@
-# Day 4: 
+# Day 4: Printing Department
 [Day 4 puzzle in Advent of code 2025](https://adventofcode.com/2025/day/4)  
 
 [Part 1 Solution](puzzle1.py)  
